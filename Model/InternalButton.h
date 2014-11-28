@@ -1,13 +1,13 @@
-#ifndef INLIFT_H_
-#define INLIFT_H_
+#ifndef internalButton_H_
+#define internalButton_H_
 #include "Button.h"
 using namespace std;
 
 //Derived class
-class inLift: public Button
+class internalButton: public Button
 {
    public:
-   inLift(int ,int );
+   internalButton(int ,int );
    int getDestination();
    void setDestinationFlr(int);
    int getliftID();
@@ -20,4 +20,4 @@ class inLift: public Button
 
 
 
-#endif /* INLIFT_H_ */
+#endif /* internalButton_H_ */

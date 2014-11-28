@@ -1,20 +1,20 @@
-#include "onFloor.h"
+#include "externalButton.h"
 using namespace std;
-onFloor:: onFloor(int fl,int dir){
+externalButton:: externalButton(int fl,int dir){
 	floor=fl;
 	direction=dir;
 }
 
-int onFloor:: getFlr(){
+int externalButton:: getFlr(){
 	return floor;
 }
-void onFloor:: setFlr(int fl){
+void externalButton:: setFlr(int fl){
 	floor=fl;
 }
-int onFloor:: getDir(){
+int externalButton:: getDir(){
 	return direction;
 }
-void onFloor:: setDir(int dir){
+void externalButton:: setDir(int dir){
 	direction=dir;
 }
 

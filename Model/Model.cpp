@@ -24,3 +24,7 @@ Model::Model(vector<string> l, vector<string> p) {
 
 	changed = true;
 }
+
+void Model::addButtons(){
+
+}
