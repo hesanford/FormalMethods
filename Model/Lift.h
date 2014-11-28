@@ -11,6 +11,8 @@ public:
 	void setID(int);
 	int getWLimit();
 	void setWLimit(int);
+	int getCurWeight();
+	void setCurWeight(int);
 	int getMinFloor();
 	void setMinFloor(int);
 	int getMaxFloor();
@@ -21,12 +23,14 @@ public:
 	void setDirection(int);
 	vector<int> getNextDests();
 	void updateNextDests(vector<int>);
+	void performStep();
 //		bool areDoorsOpen();
 //		void setDoorsOpen(bool);
 private:
 	vector<int> nextDests;
 	int ID;
 	int wLimit;
+	int curWeight;
 	int minFloor;
 	int maxFloor;
 	int floor;

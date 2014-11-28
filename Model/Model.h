@@ -14,17 +14,18 @@ public:
 	vector<Lift> lifts;
 	vector<Passenger> passengers;
 	vector<Button> buttons;
-	void update();
+	void update(bool);
 	bool isChanged();
 	void setChanged(bool);
 private:
 	void addLift(string);
 	void addPsgr(string);
 	void addButtons();
-	void getMinFloor();
-	void getMaxFloor();
+	int getMinFloor();
+	int getMaxFloor();
 	bool changed;
 	int liftCount;
 	int minFloor;
 	int maxFloor;
 };
+#endif

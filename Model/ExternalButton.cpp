@@ -1,20 +1,21 @@
-#include "externalButton.h"
+#include "ExternalButton.h"
 using namespace std;
-externalButton:: externalButton(int fl,int dir){
+ExternalButton:: ExternalButton(int fl,int dir){
 	floor=fl;
 	direction=dir;
+	pressed=0;
 }
 
-int externalButton:: getFlr(){
+int ExternalButton:: getFlr(){
 	return floor;
 }
-void externalButton:: setFlr(int fl){
+void ExternalButton:: setFlr(int fl){
 	floor=fl;
 }
-int externalButton:: getDir(){
+int ExternalButton:: getDir(){
 	return direction;
 }
-void externalButton:: setDir(int dir){
+void ExternalButton:: setDir(int dir){
 	direction=dir;
 }
 

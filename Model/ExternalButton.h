@@ -1,13 +1,13 @@
-#ifndef externalButton_H_
-#define externalButton_H_
+#ifndef ExternalButton_H_
+#define ExternalButton_H_
 #include "Button.h"
 using namespace std;
 //Derived class
-class externalButton: public Button
+class ExternalButton: public Button
 {
 
    public:
-   externalButton(int fl,int dir);
+   ExternalButton(int fl,int dir);
    int getFlr();
    void setFlr(int);
    int getDir();
@@ -20,4 +20,4 @@ class externalButton: public Button
 
 
 
-#endif /* externalButton_H_ */
+#endif /* ExternalButton_H_ */
