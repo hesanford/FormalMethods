@@ -32,7 +32,7 @@ private:
 	int destinationFloor;
 	int currentLift;
 	bool idle;
-//		struct tm arrivalTime;
-//		struct tm deptTime;
+	string tArr;
+	string tDept;
 };
 #endif

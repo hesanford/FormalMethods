@@ -1,6 +1,6 @@
 #ifndef Lift_H
 #define Lift_H
-
+#include <vector>
 #include <iostream>
 
 using namespace std;
@@ -21,7 +21,7 @@ public:
 	void setFloor(int);
 	int getDirection();
 	void setDirection(int);
-	vector<int> getNextDests();
+	vector <int> getNextDests();
 	void updateNextDests(vector<int>);
 	void performStep();
 //		bool areDoorsOpen();

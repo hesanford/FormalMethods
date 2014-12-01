@@ -1,6 +1,5 @@
-#ifndef Model_H
-#define Model_H
-
+#ifndef MODEL_H_
+#define MODEL_H_
 #include <vector>
 #include <iostream>
 #include "Passenger.h"
@@ -17,15 +16,15 @@ public:
 	void update(bool);
 	bool isChanged();
 	void setChanged(bool);
-private:
 	void addLift(string);
 	void addPsgr(string);
 	void addButtons();
 	int getMinFloor();
 	int getMaxFloor();
+private:
 	bool changed;
 	int liftCount;
 	int minFloor;
 	int maxFloor;
 };
-#endif
+#endif /* MODEL_H_ */

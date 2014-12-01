@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Lift.h"
-
+#include <vector>
 using namespace std;
 Lift::Lift(int identity, int weightLimit, int minF, int maxF, int curF, int dir,
 		bool dOpen) {
@@ -9,7 +9,7 @@ Lift::Lift(int identity, int weightLimit, int minF, int maxF, int curF, int dir,
 	curWeight = 0;
 	minFloor = minF;
 	maxFloor = maxF;
-	nextDests = new vector<int>;
+	std::vector<int> nextDests;
 	floor = curF;		//initialize with 0 ?
 	direction = dir;	//initilaize with 0 ?	can be 1 (up), -1(down), 0 (idle);
 	doorsOpen = dOpen;	//initialize with true?
@@ -72,4 +72,3 @@ void setDirection(int) {
 }
 //		bool areDoorsOpen();
 //		void setDoorsOpen(bool);
-

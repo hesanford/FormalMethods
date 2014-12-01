@@ -3,14 +3,18 @@
 #include "Passenger.h"
 #include "Lift.h"
 #include "Button.h"
-#include "ExternalButton.h"
 #include "Model.h"
+#include <sstream>
+#include <stdio.h>
+#include <string.h>
 
+#include "externalButton.h"
+#include "internalButton.h"
 using namespace std;
 Model::Model(vector<string> l, vector<string> p) {
-	lifts = new vector<Lift>;
-	passengers = new vector<Passenger>;
-	buttons = new vector<Button>;
+	std::vector<Lift> lifts;
+	std:: vector<Passenger> passengers;
+	std:: vector<Button> buttons;
 	liftCount = l.size();
 
 	for (int i = 0; i < l.size(); i++) {
@@ -42,23 +46,100 @@ void Model::update(bool onTick) {
 
 void Model::addButtons() {
 	for (int i = minFloor; i < maxFloor; i++) {
-		buttons.insert(new ExternalButton(i, 1));
+		externalButton a(i,1);
+		buttons.push_back(a);
 	}
 	for (int i = 0; i < liftCount; i++) {
 		int f_min = lifts.at(i).getMinFloor();
 		int f_max = lifts.at(i).getMaxFloor();
 		for (int j = f_min; j < f_max; j++) {
-			buttons.insert(new InternalButton(lifts.at(i).getID(), j));
+			{
+			internalButton b(lifts.at(i).getID(), j);
+			buttons.push_back(b);
+			}
 		}
 	}
 }
 
-void Model::addLift(string) {
+void Model::addLift(string new_l) {
 	//TODO split string by comma and parse into lift
+	vector<string> elements(7);
+	int  identity,weightLimit,minF,maxF,curF,dir;
+	bool dOpen;
+	for (int i=1; i<=7;i++)
+		for(int j=0; j<=new_l.size(); j++)
+	if (new_l.at(j)==','){
+		if (i==1){
+			istringstream buffer(elements.at(i));
+			buffer >> identity;
+		}
+		else if (i==2){
+			istringstream buffer(elements.at(i));
+			buffer >> weightLimit;
+		}
+		else if(i==3){
+			istringstream buffer(elements.at(i));
+			buffer >> minF;
+		}
+		else if(i==4){
+			istringstream buffer(elements.at(i));
+			buffer >> maxF;
+
+		}
+		else if (i==5){
+			istringstream buffer(elements.at(i));
+			buffer >> curF;
+		}
+		else if(i==6){
+			istringstream buffer(elements.at(i));
+			buffer >>dir;
+		}
+		else if(i==7){
+			 istringstream buffer(elements.at(i));
+			 buffer >>dOpen;
+		}
+
+	}
+	else
+		elements.at(i)+=new_l.at(j);
+	Lift l( identity,  weightLimit,  minF,  maxF,  curF,  dir, dOpen);
+	lifts.push_back(l);
+
 }
 
-void Model::addPsgr(string) {
+void Model::addPsgr(string new_p) {
 	//TODO split string by comma and parse into passenger
+	vector<string> elements(5);
+		int ID,weight,travelFreq;
+		std::string currentLift,destinationFloor;
+
+		for (int i=1; i<=5;i++)
+			for(int j=0; j<=new_p.size(); j++)
+		if (new_p.at(j)==','){
+			if (i==1){
+				istringstream buffer(elements.at(i));
+				buffer >> ID;
+			}
+			else if (i==2){
+				istringstream buffer(elements.at(i));
+				buffer >> weight;
+			}
+			else if(i==3){
+				istringstream buffer(elements.at(i));
+				buffer >> travelFreq;
+			}
+			else if(i==4){
+				currentLift=elements.at(i);
+
+			}
+			else if (i==5){
+				destinationFloor=elements.at(i);}
+		}
+		else
+			elements.at(i)+=new_p.at(j);
+		Passenger p(ID,weight,travelFreq,currentLift,destinationFloor);
+		passengers.push_back(p);
+
 }
 
 int Model::getMinFloor() {

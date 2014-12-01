@@ -1,21 +1,21 @@
-#include "InternalButton.h"
+#include "internalButton.h"
 using namespace std;
 
-InternalButton:: InternalButton(int lID ,int dFlr){
+internalButton:: internalButton(int lID ,int dFlr){
 	liftID=lID;
 	destination=dFlr;
 }
-int InternalButton:: getDestination(){
+int internalButton:: getDestination(){
 	return destination;
 	}
-void InternalButton:: setDestinationFlr(int dFlr){
+void internalButton:: setDestinationFlr(int dFlr){
 	destination=dFlr;
 }
-int InternalButton:: getliftID(){
+int internalButton:: getliftID(){
    return liftID;
    }
 
-void InternalButton:: setliftID(int lID){
+void internalButton:: setliftID(int lID){
 	liftID=lID;
 }
 
