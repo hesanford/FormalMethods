@@ -1,0 +1,159 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0303 
+header_name {.h} 
+code_name {.cxx}
+Function {make_window()} {open
+} {
+  Fl_Window {} {open selected
+    xywh {93 91 732 629} type Single resizable visible
+  } {
+    Fl_Value_Slider {} {
+      label Lift1
+      xywh {345 35 20 525} color 223 align 33 minimum 10 step 1 value 5 slider_size 0.1
+    }
+    Fl_Value_Slider {} {
+      label Lift2
+      xywh {395 35 20 525} color 213 align 33 minimum 10 step 1 value 1 slider_size 0.1
+    }
+    Fl_Value_Slider {} {
+      label Lift3
+      xywh {445 35 20 525} color 223 align 33 minimum 10 step 1 value 9 slider_size 0.1
+    }
+    Fl_Value_Slider {} {
+      label Lift4
+      xywh {495 35 20 525} color 213 align 33 minimum 10 step 1 value 2 slider_size 0.1
+    }
+    Fl_Box {} {
+      label Passengers
+      xywh {100 50 185 510} box EMBOSSED_BOX align 1
+    }
+    Fl_Output {} {
+      label {1st Floor}
+      xywh {185 520 25 25} labelsize 12 textsize 12
+      code0 {o->value("7");}
+    }
+    Fl_Output {} {
+      label {2nd Floor}
+      xywh {185 471 25 25} labelsize 12 textsize 12
+      code0 {o->value("2");}
+    }
+    Fl_Output {} {
+      label {3rd Floor}
+      xywh {185 421 25 25} labelsize 12 textsize 12
+      code0 {o->value("0");}
+    }
+    Fl_Output {} {
+      label {4th Floor}
+      xywh {185 372 25 25} labelsize 12 textsize 12
+      code0 {o->value("1");}
+    }
+    Fl_Output {} {
+      label {5th Floor}
+      xywh {185 322 25 25} labelsize 12 textsize 12
+      code0 {o->value("0");}
+    }
+    Fl_Output {} {
+      label {6th Floor}
+      xywh {185 272 25 25} labelsize 12 textsize 12
+      code0 {o->value("0");}
+    }
+    Fl_Output {} {
+      label {7th Floor}
+      xywh {185 217 25 25} labelsize 12 textsize 12
+      code0 {o->value("1");}
+    }
+    Fl_Output {} {
+      label {8th Floor}
+      xywh {185 167 25 25} labelsize 12 textsize 12
+      code0 {o->value("0");}
+    }
+    Fl_Output {} {
+      label {9th Floor}
+      xywh {185 120 25 25} labelsize 12 textsize 12
+      code0 {o->value("0");}
+    }
+    Fl_Output {} {
+      label {10th Floor}
+      xywh {185 70 25 25} labelsize 12 textsize 12
+      code0 {o->value("3");}
+    }
+    Fl_Scrollbar {} {
+      xywh {708 0 25 604} align 8 resizable
+    }
+    Fl_Scrollbar {} {
+      xywh {0 605 707 25} type Horizontal align 6
+    }
+    Fl_Round_Button {} {
+      label Up
+      xywh {215 520 60 25} down_box ROUND_DOWN_BOX value 1 color 1 labelsize 12
+    }
+    Fl_Round_Button {} {
+      label Down
+      xywh {215 485 60 25} down_box ROUND_DOWN_BOX value 1 color 4 labelsize 12
+    }
+    Fl_Round_Button {} {
+      label Up
+      xywh {215 465 60 25} down_box ROUND_DOWN_BOX value 1 color 1 labelsize 12
+    }
+    Fl_Round_Button {} {
+      label Down
+      xywh {215 434 60 25} down_box ROUND_DOWN_BOX color 4 labelsize 12
+    }
+    Fl_Round_Button {} {
+      label Up
+      xywh {215 414 60 25} down_box ROUND_DOWN_BOX color 1 labelsize 12
+    }
+    Fl_Round_Button {} {
+      label Down
+      xywh {215 385 60 25} down_box ROUND_DOWN_BOX value 1 color 4 labelsize 12
+    }
+    Fl_Round_Button {} {
+      label Up
+      xywh {215 365 60 25} down_box ROUND_DOWN_BOX color 1 labelsize 12
+    }
+    Fl_Round_Button {} {
+      label Down
+      xywh {215 335 60 25} down_box ROUND_DOWN_BOX color 4 labelsize 12
+    }
+    Fl_Round_Button {} {
+      label Up
+      xywh {215 315 60 25} down_box ROUND_DOWN_BOX color 1 labelsize 12
+    }
+    Fl_Round_Button {} {
+      label Down
+      xywh {215 280 60 25} down_box ROUND_DOWN_BOX color 4 labelsize 12
+    }
+    Fl_Round_Button {} {
+      label Up
+      xywh {215 260 60 25} down_box ROUND_DOWN_BOX color 1 labelsize 12
+    }
+    Fl_Round_Button {} {
+      label Down
+      xywh {215 230 60 25} down_box ROUND_DOWN_BOX color 4 labelsize 12
+    }
+    Fl_Round_Button {} {
+      label Up
+      xywh {215 210 60 25} down_box ROUND_DOWN_BOX value 1 color 1 labelsize 12
+    }
+    Fl_Round_Button {} {
+      label Down
+      xywh {215 180 60 25} down_box ROUND_DOWN_BOX color 4 labelsize 12
+    }
+    Fl_Round_Button {} {
+      label Up
+      xywh {215 160 60 25} down_box ROUND_DOWN_BOX color 1 labelsize 12
+    }
+    Fl_Round_Button {} {
+      label Down
+      xywh {215 131 60 25} down_box ROUND_DOWN_BOX color 4 labelsize 12
+    }
+    Fl_Round_Button {} {
+      label Up
+      xywh {215 111 60 25} down_box ROUND_DOWN_BOX color 1 labelsize 12
+    }
+    Fl_Round_Button {} {
+      label Down
+      xywh {215 70 60 25} down_box ROUND_DOWN_BOX value 1 color 4 labelsize 12
+    }
+  }
+} 
