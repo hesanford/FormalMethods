@@ -7,10 +7,10 @@
 #include <sstream>
 #include <stdio.h>
 #include <string.h>
-
 #include "externalButton.h"
 #include "internalButton.h"
 using namespace std;
+
 Model::Model(vector<string> l, vector<string> p) {
 	std::vector<Lift> lifts;
 	std:: vector<Passenger> passengers;
@@ -181,14 +181,3 @@ for (int i=0; i<extButtons.size(); i++){
 }
 return ExternalButtonsPressed;
 }
-std::list <Passenger> ChangedPassengers(){
-	std::list <Passenger> p;
-//needs implementation
-	return p;
-	}
-
-std::list <Lift> ChangedLifts(){
-	std::list <Lift> l;
-	//needs implementation
-		return l;
-	}

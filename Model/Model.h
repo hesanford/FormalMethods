@@ -23,8 +23,7 @@ public:
 	vector <internalButton> getInternalButtons();
 	vector <externalButton> getExternalButtons();
 	std::list <externalButton> CallingFloorList();
-	std::list <Passenger> ChangedPassengers();
-	std::list <Lift> ChangedLifts();
+
 private:
 	bool changed;
 	int liftCount;
@@ -34,5 +33,7 @@ private:
 	vector<Passenger> passengers;
 	vector<internalButton> intButtons;
 	vector<externalButton> extButtons;
+	std::list <Passenger> ChangedPassengers();
+	std::list <Lift> ChangedLifts();
 };
 #endif /* MODEL_H_ */
