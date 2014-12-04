@@ -6,6 +6,5 @@ Clock::Clock()
 	begin=clock();
 	}
 clock_t Clock:: getTime(int x){
-
-return (difftime(clock(),begin)%x);
+return ((clock()-begin)%x);
 }
