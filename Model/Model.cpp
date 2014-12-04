@@ -14,7 +14,7 @@ using namespace std;
 Model::Model(vector<string> l, vector<string> p) {
 	std::vector<Lift> lifts;
 	std:: vector<Passenger> passengers;
-	std:: vector<Button> buttons;
+
 	liftCount = l.size();
 
 	for (int i = 0; i < l.size(); i++) {
@@ -29,7 +29,7 @@ Model::Model(vector<string> l, vector<string> p) {
 
 	addButtons();
 
-	changed = true;
+	setChanged(true);
 }
 
 void Model::update(bool onTick) {
@@ -47,7 +47,8 @@ void Model::update(bool onTick) {
 void Model::addButtons() {
 	for (int i = minFloor; i < maxFloor; i++) {
 		externalButton a(i,1);
-		buttons.push_back(a);
+		extButtons.push_back(a);
+
 	}
 	for (int i = 0; i < liftCount; i++) {
 		int f_min = lifts.at(i).getMinFloor();
@@ -55,7 +56,7 @@ void Model::addButtons() {
 		for (int j = f_min; j < f_max; j++) {
 			{
 			internalButton b(lifts.at(i).getID(), j);
-			buttons.push_back(b);
+			intButtons.push_back(b);
 			}
 		}
 	}
@@ -165,3 +166,29 @@ bool Model::isChanged() {
 void Model::setChanged(bool c) {
 	changed = c;
 }
+vector <internalButton> Model::getInternalButtons(){
+	return intButtons;
+}
+vector <externalButton> Model::getExternalButtons(){
+	return extButtons;
+}
+std::list <externalButton> Model:: CallingFloorList(){
+	std::list <externalButton> ExternalButtonsPressed;
+for (int i=0; i<extButtons.size(); i++){
+	if (extButtons.at(i).isPressed())
+		ExternalButtonsPressed.push_back(extButtons.at(i));
+
+}
+return ExternalButtonsPressed;
+}
+std::list <Passenger> ChangedPassengers(){
+	std::list <Passenger> p;
+//needs implementation
+	return p;
+	}
+
+std::list <Lift> ChangedLifts(){
+	std::list <Lift> l;
+	//needs implementation
+		return l;
+	}
