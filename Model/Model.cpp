@@ -172,12 +172,14 @@ vector <internalButton> Model::getInternalButtons(){
 vector <externalButton> Model::getExternalButtons(){
 	return extButtons;
 }
-std::list <externalButton> Model:: CallingFloorList(){
-	std::list <externalButton> ExternalButtonsPressed;
-for (int i=0; i<extButtons.size(); i++){
+vector <int> Model:: CallingFloorList(){
+for (int i=0; i<extButtons.size(); i++)
 	if (extButtons.at(i).isPressed())
-		ExternalButtonsPressed.push_back(extButtons.at(i));
-
-}
-return ExternalButtonsPressed;
+		for(int j=0;j<CallingFloors.size();j=j+2)
+			if(CallingFloors.at(j)==extButtons.at(i).getFlr()|| CallingFloors.at(j+1)==extButtons.at(i).getDir())
+			{
+				CallingFloors.push_back(extButtons.at(i).getFlr());
+				CallingFloors.push_back(extButtons.at(i).getDir());
+			}
+return CallingFloors;
 }

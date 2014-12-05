@@ -3,6 +3,7 @@ using namespace std;
 externalButton:: externalButton(int fl,int dir){
 	floor=fl;
 	direction=dir;
+	pressed=0;
 }
 
 int externalButton:: getFlr(){
@@ -16,6 +17,12 @@ int externalButton:: getDir(){
 }
 void externalButton:: setDir(int dir){
 	direction=dir;
+}
+bool externalButton:: isPressed(){
+	return pressed;
+}
+void externalButton:: setPressed(bool pr){
+	pressed=pr;
 }
 
 

@@ -2,6 +2,7 @@
 #define Lift_H
 #include <vector>
 #include <iostream>
+#include "Passenger.h"
 
 using namespace std;
 class Lift {
@@ -13,6 +14,7 @@ public:
 	void setWLimit(int);
 	int getCurWeight();
 	void setCurWeight(int);
+	bool checkWeight();
 	int getMinFloor();
 	void setMinFloor(int);
 	int getMaxFloor();
@@ -24,10 +26,11 @@ public:
 	vector <int> getNextDests();
 	void updateNextDests(vector<int>);
 	void performStep();
-//		bool areDoorsOpen();
-//		void setDoorsOpen(bool);
+    bool areDoorsOpen();
+    void setDoors(bool);
 private:
-	vector<int> nextDests;
+	vector<int> firstPriorityList;
+	vector<int> secondPriorityList;
 	int ID;
 	int wLimit;
 	int curWeight;
@@ -38,6 +41,6 @@ private:
 	bool doorsOpen;
 //		int speed;
 //		int failureRate;
-
+	vector <Passenger> passengers;
 };
 #endif

@@ -9,7 +9,6 @@ Lift::Lift(int identity, int weightLimit, int minF, int maxF, int curF, int dir,
 	curWeight = 0;
 	minFloor = minF;
 	maxFloor = maxF;
-	std::vector<int> nextDests;
 	floor = curF;		//initialize with 0 ?
 	direction = dir;	//initilaize with 0 ?	can be 1 (up), -1(down), 0 (idle);
 	doorsOpen = dOpen;	//initialize with true?
@@ -19,8 +18,8 @@ void Lift::performStep() {
 	//needs a lot of rework; weight etc.
 	if (!doorsOpen) {
 		floor = floor + direction;
-		if (floor == nextDests.at(0)) {
-			nextDests.erase(nextDests.begin());
+		if (floor == firstPriorityList.at(0)) {
+			firstPriorityList.erase(firstPriorityList.begin());
 			doorsOpen = true;
 		}
 	} else {
@@ -37,7 +36,8 @@ void Lift::setID(int identity) {
 int Lift::getWLimit() {
 	return wLimit;
 }
-void Lift::setWLimit(int) {
+void Lift::setWLimit(int w) {
+	wLimit=w;
 }
 
 int Lift::getCurWeight(){
@@ -51,24 +51,43 @@ void Lift::setCurWeight(int w){
 int Lift::getMinFloor() {
 	return minFloor;
 }
-void Lift::setMinFloor(int) {
+void Lift::setMinFloor(int minf) {
+	minFloor=minf;
 }
 int Lift::getMaxFloor() {
 	return maxFloor;
 }
-void Lift::setMaxFloor(int) {
+void Lift::setMaxFloor(int maxf) {
+	maxFloor=maxf;
 }
 
 int Lift::getFloor() {
-	return direction;
+	return floor;
 }
-void Lift::setFloor(int) {
+void Lift::setFloor(int f) {
+floor=f;
 }
 
 int Lift::getDirection() {
 	return doorsOpen;
 }
-void setDirection(int) {
+void Lift::setDirection(int dir) {
+	direction=dir;
 }
-//		bool areDoorsOpen();
-//		void setDoorsOpen(bool);
+bool Lift::areDoorsOpen(){
+	return doorsOpen;
+
+}
+void Lift::setDoors(bool d)
+{
+	doorsOpen=d;
+}
+
+bool Lift:: checkWeight(){
+int check;
+check=getWLimit()-getCurWeight();
+	if (check>0)
+		return 1;
+	else
+		return 0;
+}

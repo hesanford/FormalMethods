@@ -28,7 +28,7 @@ void Passenger::callLift() {
 
 
  void Passenger::enterLift(int l_id){
-	 currentLift = l_id;
+ currentLift = l_id;
  }
 
 

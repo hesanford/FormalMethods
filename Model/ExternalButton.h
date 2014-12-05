@@ -1,9 +1,8 @@
 #ifndef externalButton_H_
 #define externalButton_H_
-#include "Button.h"
 using namespace std;
-//Derived class
-class externalButton: public Button
+
+class externalButton
 {
 
    public:
@@ -12,10 +11,12 @@ class externalButton: public Button
    void setFlr(int);
    int getDir();
    void setDir(int);
+   bool isPressed();
+   void setPressed(bool);
    private:
    int floor;
    int direction;
-
+   bool pressed;
 };
 
 
