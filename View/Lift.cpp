@@ -17,34 +17,33 @@ Lift :: Lift(int floor, int passengers, int dir, vector<bool> btns) {
         buttons = btns;
     }
     
-Lift :: int getCurFLoor() {
+int Lift :: getCurFLoor() {
         return currentFloor;
     }
-Lift :: int getNumPass() {
+int Lift :: getNumPass() {
         return numPassengers;
     }
     
-Lift :: int getDir() {
+int Lift :: getDir() {
         return  direction;
     }
     
-Lift :: vector<bool> getButtons() {
+vector<bool> Lift :: getButtons() {
         return buttons;
     }
     
-Lift :: void setCurFloor(int floor) {
+void Lift :: setCurFloor(int floor) {
         currentFloor = floor;
     }
     
-Lift :: void setNumPass(int passengers) {
+void Lift :: setNumPass(int passengers) {
         numPassengers = passengers;
     }
     
-Lift :: void setDir(int dir) {
+void Lift :: setDir(int dir) {
         direction = dir;
     }
     
-Lift :: void setButtons(vector<bool> btns) {
+void Lift :: setButtons(vector<bool> btns) {
         buttons = btns;
     }
-};

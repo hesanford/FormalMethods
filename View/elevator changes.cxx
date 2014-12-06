@@ -6,6 +6,7 @@ Fl_Window* make_window() {
   Fl_Window* w;
   { Fl_Window* o = new Fl_Window(931, 704, "Passengers");
     w = o;
+    o->color((Fl_Color)55);
     o->labelsize(12);
     { Fl_Value_Slider* o = new Fl_Value_Slider(345, 35, 20, 525, "Lift1");
       o->color(FL_CYAN);
@@ -22,6 +23,7 @@ Fl_Window* make_window() {
       o->value(1);
       o->slider_size(0.1);
       o->align(Fl_Align(33));
+      o->deactivate();
     } // Fl_Value_Slider* o
     { Fl_Value_Slider* o = new Fl_Value_Slider(605, 35, 20, 525, "Lift3");
       o->color(FL_CYAN);
@@ -41,6 +43,8 @@ Fl_Window* make_window() {
     } // Fl_Value_Slider* o
     { Fl_Box* o = new Fl_Box(100, 50, 185, 510, "Passengers");
       o->box(FL_EMBOSSED_BOX);
+      o->color((Fl_Color)55);
+      o->selection_color(FL_FOREGROUND_COLOR);
       o->align(Fl_Align(FL_ALIGN_TOP));
     } // Fl_Box* o
     { Fl_Output* o = new Fl_Output(185, 520, 25, 25, "1st Floor");
@@ -188,6 +192,7 @@ Fl_Window* make_window() {
       o->value(1);
       o->color((Fl_Color)4);
       o->labelsize(12);
+      o->deactivate();
     } // Fl_Round_Button* o
     { Fl_Round_Button* o = new Fl_Round_Button(370, 395, 35, 15, "1");
       o->down_box(FL_ROUND_DOWN_BOX);
@@ -327,6 +332,7 @@ Fl_Window* make_window() {
     { new Fl_Button(510, 640, 63, 20, "Load File");
     } // Fl_Button* o
     o->end();
+    o->resizable(o);
   } // Fl_Window* o
   return w;
 }

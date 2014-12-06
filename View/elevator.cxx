@@ -6,6 +6,7 @@ using namespace std;
 
 int NUMLIFTS = 3;
 int NUMFLOORS = 5;
+
 int temp1[] = {4, 0,1};
 vector<int> LIFTPASSENGERS(temp1, temp1+3);
 int temp2[] = {0, 0, 3};
@@ -38,12 +39,11 @@ vector< vector<bool> > FLOORBUTTONS(temp14, temp14+5);
 vector<Lift> lifts;
 vector<Floor> floors;
 int main() {
-    for(int i = 0; i < lifts.size() - 1; i++) {
-        vector<bool> test (5);
+    for(int i = 0; i < NUMLIFTS; i++) {
         Lift l(LIFTSTARTFLOOR[i], LIFTPASSENGERS[i], LIFTSTARTDIR[i], LIFTBUTTONS[i]);
         lifts.push_back(l);
     }
-    for(int i = 0; i < floors.size() - 1; i++) {
+    for(int i = 0; i < NUMFLOORS; i++) {
         Floor f(FLOORPASSENGERS[i], FLOORBUTTONS[i]);
         floors.push_back(f);
     }
@@ -57,15 +57,12 @@ int main() {
         Fl_Window* w;
             { Fl_Window* o = new Fl_Window(350 + NUMLIFTS * 140, 704, "Lift");
                 w = o;
+                o->color((Fl_Color)55);
                 int x = 345;
-                string name = "lift1";
-                int value = 5;
-                int max = NUMFLOORS;
                 for(int i = 0; i < NUMLIFTS; i++) {
-                    //string name = "Lift".append(i);
                     { Fl_Value_Slider* o = new Fl_Value_Slider(x, 75, 20, 525, "Lift");
                         sliders[i] = o;
-                        switch(1) {
+                        switch(lifts[i].getDir()) {
                             case(-1):
                                 sliders[i]->color(FL_CYAN);
                                 break;
@@ -75,34 +72,38 @@ int main() {
                             default:
                                 break;
                         }
-                        sliders[i]->minimum(max);
+                        sliders[i]->minimum(NUMFLOORS);
+                        sliders[i]->maximum(0);
                         sliders[i]->step(1);
-                        sliders[i]->value(value);
+                        sliders[i]->value(lifts[i].getCurFLoor());
                         sliders[i]->slider_size(0.1);
                         sliders[i]->align(Fl_Align(33));
+                        o->deactivate();
                     } // Fl_Value_Slider* o
                     x+= 125;
                 }
         { Fl_Box* o = new Fl_Box(145, 100, 150, 510, "Passengers");
           o->box(FL_EMBOSSED_BOX);
+            o->color((Fl_Color)55);
           o->align(Fl_Align(FL_ALIGN_TOP));
         } // Fl_Box* o
                 int y = 112;
                 for(int i = 0; i < NUMFLOORS; i++) {
-                    { Fl_Output* o = new Fl_Output(185, y, 25, 25, "Floor");
+                    { Fl_Value_Output* o = new Fl_Value_Output(185, y, 25, 25, "Floor");
                         o->labelsize(12);
                         o->textsize(12);
-                        o->value("6");
-                    } // Fl_Output* o
+                        o->value(floors[i].getNumPass());
+                    } // Fl_Value_Output* o
                     y+= 50;
                 }
                 y = 155;
                 for(int i = 0; i < NUMFLOORS - 1; i++) {
                     { Fl_Round_Button* o = new Fl_Round_Button(215, y, 60, 25, "Up");
                         o->down_box(FL_ROUND_DOWN_BOX);
+                        //TODO
                         o->value(1);
-                        o->color((Fl_Color)1);
                         o->labelsize(12);
+                        o->deactivate();
                     } // Fl_Round_Button* o
                     y += 50;
                 }
@@ -110,9 +111,10 @@ int main() {
                 for(int i = 1; i < NUMFLOORS; i++) {
                     { Fl_Round_Button* o = new Fl_Round_Button(215, y, 60, 25, "Down");
                         o->down_box(FL_ROUND_DOWN_BOX);
+                        //TOD
                         o->value(1);
-                        o->color((Fl_Color)4);
                         o->labelsize(12);
+                        o->deactivate();
                     } // Fl_Round_Button* o
                     y+= 50;
                 }
@@ -120,19 +122,19 @@ int main() {
                 for(int i = 0; i < NUMLIFTS; i++) {
                     y = 150;
                     for(int i = 0; i < NUMFLOORS; i++) {
-                        { Fl_Round_Button* o = new Fl_Round_Button(x, y, 35, 15, "1");
+                        { Fl_Round_Button* o = new Fl_Round_Button(x, y, 35, 15, to_string(i).c_str());
                             o->down_box(FL_ROUND_DOWN_BOX);
+                            o->deactivate();
                         } // Fl_Round_Button* o
                         y+= 20;
                     }
                     x+= 125;
                 }
                 x = 435;
-                value = 5;
                 for(int i = 0; i < NUMLIFTS; i++) {
                     { Fl_Value_Output* o = new Fl_Value_Output(x, 100, 33, 24, "Passengers");
                         o->labelsize(12);
-                        o->value(value);
+                        o->value(lifts[i].getNumPass());
                     } // Fl_Value_Output* o
                     x += 125;
                 }
@@ -159,3 +161,62 @@ int main() {
 //        Console::WriteLine(s);
 //    }
 //};
+
+Floor :: Floor(int passengers, vector<bool> btns) {
+    numPassengers = passengers;
+    buttons = btns;
+}
+
+int Floor :: getNumPass() {
+    return numPassengers;
+}
+
+vector<bool> Floor :: getButtons() {
+    return buttons;
+}
+
+void Floor :: setNumPass(int passengers) {
+    numPassengers = passengers;
+}
+
+void Floor :: setButtons(vector<bool> btns) {
+    buttons = btns;
+}
+
+Lift :: Lift(int floor, int passengers, int dir, vector<bool> btns) {
+    currentFloor = floor;
+    numPassengers = passengers;
+    direction = dir;
+    buttons = btns;
+}
+
+int Lift :: getCurFLoor() {
+    return currentFloor;
+}
+int Lift :: getNumPass() {
+    return numPassengers;
+}
+
+int Lift :: getDir() {
+    return  direction;
+}
+
+vector<bool> Lift :: getButtons() {
+    return buttons;
+}
+
+void Lift :: setCurFloor(int floor) {
+    currentFloor = floor;
+}
+
+void Lift :: setNumPass(int passengers) {
+    numPassengers = passengers;
+}
+
+void Lift :: setDir(int dir) {
+    direction = dir;
+}
+
+void Lift :: setButtons(vector<bool> btns) {
+    buttons = btns;
+}

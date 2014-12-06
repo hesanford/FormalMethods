@@ -15,18 +15,18 @@ Floor :: Floor(int passengers, vector<bool> btns) {
         buttons = btns;
     }
     
-Floor :: int getNumPass() {
+int Floor :: getNumPass() {
         return numPassengers;
     }
     
-Floor :: vector<bool> getButtons() {
+vector<bool> Floor :: getButtons() {
         return buttons;
     }
     
-Floor :: void setNumPass(int passengers) {
+void Floor :: setNumPass(int passengers) {
         numPassengers = passengers;
     }
     
-FLoor :: void setButtons(vector<bool> btns) {
+void Floor :: setButtons(vector<bool> btns) {
         buttons = btns;
     }
