@@ -6,53 +6,45 @@
 //
 //
 
-#include <stdio.h>
-#include <vector>
+#include "Lift.h"
 
 using namespace std;
-
-class Lift {
-    int currentFloor;
-    int numPassengers;
-    int direction;
-    vector<bool> buttons;
     
-public: Lift(int floor, int passengers, int dir, vector<bool> btns) {
+Lift :: Lift(int floor, int passengers, int dir, vector<bool> btns) {
         currentFloor = floor;
         numPassengers = passengers;
         direction = dir;
         buttons = btns;
     }
     
-public: int getCurFLoor() {
+Lift :: int getCurFLoor() {
         return currentFloor;
     }
-    
-public: int getNumPass() {
+Lift :: int getNumPass() {
         return numPassengers;
     }
     
-public: int getDir() {
+Lift :: int getDir() {
         return  direction;
     }
     
-public: vector<bool> getButtons() {
+Lift :: vector<bool> getButtons() {
         return buttons;
     }
     
-public: void setCurFloor(int floor) {
+Lift :: void setCurFloor(int floor) {
         currentFloor = floor;
     }
     
-public: void setNumPass(int passengers) {
+Lift :: void setNumPass(int passengers) {
         numPassengers = passengers;
     }
     
-public: void setDir(int dir) {
+Lift :: void setDir(int dir) {
         direction = dir;
     }
     
-public: void setButtons(vector<bool> btns) {
+Lift :: void setButtons(vector<bool> btns) {
         buttons = btns;
     }
 };

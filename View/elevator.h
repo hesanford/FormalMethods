@@ -11,5 +11,10 @@
 #include <FL/Fl_Value_Output.H>
 #include <FL/Fl_Input.H>
 #include <FL/Fl_Button.H>
+#include "Lift.h"
+#include "FLoor.h"
+#include <stdio.h>
+#include <vector>
+#include <string>
 Fl_Window* make_window();
 #endif

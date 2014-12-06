@@ -6,33 +6,27 @@
 //
 //
 
-#include <stdio.h>
-#include <vector>
+#include "Floor.h"
 
 using namespace std;
 
-class Floor {
-    int numPassengers;
-    vector<bool> buttons;
-    
-public: Floor(int passengers, vector<bool> btns) {
+Floor :: Floor(int passengers, vector<bool> btns) {
         numPassengers = passengers;
         buttons = btns;
     }
     
-public: int getNumPass() {
+Floor :: int getNumPass() {
         return numPassengers;
     }
     
-public: vector<bool> getButtons() {
+Floor :: vector<bool> getButtons() {
         return buttons;
     }
     
-public: void setNumPass(int passengers) {
+Floor :: void setNumPass(int passengers) {
         numPassengers = passengers;
     }
     
-public: void setButtons(vector<bool> btns) {
+FLoor :: void setButtons(vector<bool> btns) {
         buttons = btns;
     }
-};
