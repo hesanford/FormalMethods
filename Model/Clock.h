@@ -6,10 +6,11 @@ using namespace std;
 class Clock {
 public:
 	Clock();
-	clock_t getTime(int );
+	clock_t getTime();
+	bool Tick(int x);
 private:
 	clock_t begin;
-
+	int counter;
 
 
 
