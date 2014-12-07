@@ -23,4 +23,3 @@ void Button::setPressed(bool pr)   /*@param boolean set button pressed*/
 {
 	pressed = pr;                     /*@param reserve pressed*/
 }
-

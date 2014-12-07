@@ -11,5 +11,45 @@
 #include <FL/Fl_Value_Output.H>
 #include <FL/Fl_Input.H>
 #include <FL/Fl_Button.H>
+#include <stdio.h>
+#include <vector>
+#include <string>
 Fl_Window* make_window();
+
+using namespace std;
+
+class Floor {
+private:
+    int numPassengers;
+    vector<bool> buttons;
+    
+public:
+    Floor(int passengers, vector<bool> btns);
+    int getNumPass();
+    vector<bool> getButtons();
+    void setNumPass(int passengers);
+    void setButtons(vector<bool> btns);
+    
+};
+
+class Lift {
+    int currentFloor;
+    int numPassengers;
+    int direction;
+    vector<bool> buttons;
+    
+public:
+    Lift(int floor, int passengers, int dir, vector<bool> btns);
+    int getCurFLoor();
+    int getNumPass();
+    int getDir();
+    vector<bool> getButtons();
+    void setCurFloor(int floor);
+    void setNumPass(int passengers);
+    void setDir(int dir);
+    void setButtons(vector<bool> btns);
+    
+};
+
+
 #endif

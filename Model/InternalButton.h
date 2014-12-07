@@ -1,10 +1,12 @@
 #ifndef internalButton_H_
 #define internalButton_H_
-#include "Button.h"
 using namespace std;
 
+
 /*Derive the Internal button class
-*@param integer 
+*@param integer  the destination floor
+*@param integer  the lift identity
+*@param boolean button pressed
 *@return integer the destination floor number
 *@return integer get the lift identification
 */
@@ -19,6 +21,23 @@ class internalButton: public Button
    private:
 	   int liftID;                     /* capacity of the lift identification*/
 	   int destination;               /* capacity of the destination*/
+
+
+class internalButton
+{
+   public:
+   internalButton(int ,int );
+   int getDestination();
+   void setDestinationFlr(int);
+   int getliftID();
+   void setliftID(int);
+   bool isPressed();
+   void setPressed(bool);          /*@param boolean set pressed button */
+   private:
+   int liftID;
+   int destination;
+   bool pressed;                  /*@param boolean internal button pressed*/
+
 
 };
 

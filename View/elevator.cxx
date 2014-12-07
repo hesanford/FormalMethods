@@ -2,340 +2,221 @@
 
 #include "elevator.h"
 
+using namespace std;
+
+int NUMLIFTS = 3;
+int NUMFLOORS = 5;
+
+int temp1[] = {4, 0,1};
+vector<int> LIFTPASSENGERS(temp1, temp1+3);
+int temp2[] = {0, 0, 3};
+vector<int> LIFTSTARTFLOOR(temp2, temp2+3);
+int temp3[] = {0, 1, -1};
+vector<int> LIFTSTARTDIR(temp3, temp3+3);
+int temp4[] = {3, 0, 0, 2, 1};
+vector<int> FLOORPASSENGERS(temp4, temp4+5);
+bool temp5[] = {false, false, false, true, false};
+bool temp6[] = {true, true, false, false, false};
+bool temp7[] = {false, true, false, false, false};
+vector<bool> t5(temp5, temp5+5);
+vector<bool> t6(temp6, temp6+5);
+vector<bool> t7(temp7, temp7+5);
+vector<bool> temp8[] = {t5, t6, t7};
+vector< vector<bool> > LIFTBUTTONS(temp8, temp8+3);
+bool temp9[] = {1};
+bool temp10[] = {0, 0};
+bool temp11[] = {0, 0};
+bool temp12[] = {1, 1};
+bool temp13[] = {1};
+vector<bool> t9(temp9, temp9+1);
+vector<bool> t10(temp10, temp10+2);
+vector<bool> t11(temp11, temp11+2);
+vector<bool> t12(temp12, temp12+2);
+vector<bool> t13(temp13, temp13+1);
+vector<bool> temp14[] = {t9, t10, t11, t12, t13};
+vector< vector<bool> > FLOORBUTTONS(temp14, temp14+5);
+
+vector<Lift> lifts;
+vector<Floor> floors;
 int main() {
+    for(int i = 0; i < NUMLIFTS; i++) {
+        Lift l(LIFTSTARTFLOOR[i], LIFTPASSENGERS[i], LIFTSTARTDIR[i], LIFTBUTTONS[i]);
+        lifts.push_back(l);
+    }
+    for(int i = 0; i < NUMFLOORS; i++) {
+        Floor f(FLOORPASSENGERS[i], FLOORBUTTONS[i]);
+        floors.push_back(f);
+    }
     make_window();
     Fl::run();
     return 0;
 }
+    
+    Fl_Window* make_window() {
+        vector<Fl_Value_Slider*> sliders(NUMLIFTS);
+        Fl_Window* w;
+            { Fl_Window* o = new Fl_Window(350 + NUMLIFTS * 140, 704, "Lift");
+                w = o;
+                o->color((Fl_Color)55);
+                int x = 345;
+                for(int i = 0; i < NUMLIFTS; i++) {
+                    { Fl_Value_Slider* o = new Fl_Value_Slider(x, 75, 20, 525, "Lift");
+                        sliders[i] = o;
+                        switch(lifts[i].getDir()) {
+                            case(-1):
+                                sliders[i]->color(FL_CYAN);
+                                break;
+                            case(1):
+                                sliders[i]->color((Fl_Color)213);
+                                break;
+                            default:
+                                break;
+                        }
+                        sliders[i]->minimum(NUMFLOORS);
+                        sliders[i]->maximum(0);
+                        sliders[i]->step(1);
+                        sliders[i]->value(lifts[i].getCurFLoor());
+                        sliders[i]->slider_size(0.1);
+                        sliders[i]->align(Fl_Align(33));
+                        o->deactivate();
+                    } // Fl_Value_Slider* o
+                    x+= 125;
+                }
+        { Fl_Box* o = new Fl_Box(145, 100, 150, 510, "Passengers");
+          o->box(FL_EMBOSSED_BOX);
+            o->color((Fl_Color)55);
+          o->align(Fl_Align(FL_ALIGN_TOP));
+        } // Fl_Box* o
+                int y = 112;
+                for(int i = 0; i < NUMFLOORS; i++) {
+                    { Fl_Value_Output* o = new Fl_Value_Output(185, y, 25, 25, "Floor");
+                        o->labelsize(12);
+                        o->textsize(12);
+                        o->value(floors[i].getNumPass());
+                    } // Fl_Value_Output* o
+                    y+= 50;
+                }
+                y = 155;
+                for(int i = 0; i < NUMFLOORS - 1; i++) {
+                    { Fl_Round_Button* o = new Fl_Round_Button(215, y, 60, 25, "Up");
+                        o->down_box(FL_ROUND_DOWN_BOX);
+                        //TODO
+                        o->value(1);
+                        o->labelsize(12);
+                        o->deactivate();
+                    } // Fl_Round_Button* o
+                    y += 50;
+                }
+                y = 120;
+                for(int i = 1; i < NUMFLOORS; i++) {
+                    { Fl_Round_Button* o = new Fl_Round_Button(215, y, 60, 25, "Down");
+                        o->down_box(FL_ROUND_DOWN_BOX);
+                        //TOD
+                        o->value(1);
+                        o->labelsize(12);
+                        o->deactivate();
+                    } // Fl_Round_Button* o
+                    y+= 50;
+                }
+                x = 370;
+                for(int i = 0; i < NUMLIFTS; i++) {
+                    y = 150;
+                    for(int i = 0; i < NUMFLOORS; i++) {
+                        { Fl_Round_Button* o = new Fl_Round_Button(x, y, 35, 15, to_string(i).c_str());
+                            o->down_box(FL_ROUND_DOWN_BOX);
+                            o->deactivate();
+                        } // Fl_Round_Button* o
+                        y+= 20;
+                    }
+                    x+= 125;
+                }
+                x = 435;
+                for(int i = 0; i < NUMLIFTS; i++) {
+                    { Fl_Value_Output* o = new Fl_Value_Output(x, 100, 33, 24, "Passengers");
+                        o->labelsize(12);
+                        o->value(lifts[i].getNumPass());
+                    } // Fl_Value_Output* o
+                    x += 125;
+                }
+                { new Fl_Button(25, 25, 63, 20, "Load File");
+                } // Fl_Button* o
+                { new Fl_Button(25, 125, 110, 20, "Start Simulation");
+                } // Fl_Button* o
+                { new Fl_Button(25, 225, 110, 20, "Stop Simulation");
+                } // Fl_Button* o
+                { new Fl_Button(25, 325, 100, 20, "Step Forward");
+                } // Fl_Button* o
+                { new Fl_Button(25, 425, 110, 20, "Step Backward");
+                } // Fl_Button* o
+                
+        o->end();
+      } // Fl_Window* o
+        w->show();
+      return w;
+    }
 
-Fl_Window* make_window() {
-  Fl_Window* w;
-  { Fl_Window* o = new Fl_Window(931, 704, "Lift");
-    w = o;
-      { Fl_Value_Slider* o = new Fl_Value_Slider(345, 35, 20, 525, "Lift1");
-          o->color(FL_CYAN);
-          o->minimum(10);
-          o->step(1);
-          o->value(5);
-          o->slider_size(0.1);
-          o->align(Fl_Align(33));
-      } // Fl_Value_Slider* o
-      { Fl_Value_Slider* o = new Fl_Value_Slider(470, 35, 20, 525, "Lift2");
-          o->color((Fl_Color)213);
-          o->minimum(10);
-          o->step(1);
-          o->value(1);
-          o->slider_size(0.1);
-          o->align(Fl_Align(33));
-      } // Fl_Value_Slider* o
-      { Fl_Value_Slider* o = new Fl_Value_Slider(605, 35, 20, 525, "Lift3");
-          o->color(FL_CYAN);
-          o->minimum(10);
-          o->step(1);
-          o->value(9);
-          o->slider_size(0.1);
-          o->align(Fl_Align(33));
-      } // Fl_Value_Slider* o
-      { Fl_Value_Slider* o = new Fl_Value_Slider(735, 40, 20, 525, "Lift4");
-          o->color((Fl_Color)213);
-          o->minimum(10);
-          o->step(1);
-          o->value(2);
-          o->slider_size(0.1);
-          o->align(Fl_Align(33));
-      } // Fl_Value_Slider* o
-    { Fl_Box* o = new Fl_Box(100, 50, 185, 510, "Passengers");
-      o->box(FL_EMBOSSED_BOX);
-      o->align(Fl_Align(FL_ALIGN_TOP));
-    } // Fl_Box* o
-    { Fl_Output* o = new Fl_Output(185, 520, 25, 25, "1st Floor");
-      o->labelsize(12);
-      o->textsize(12);
-      o->value("7");
-    } // Fl_Output* o
-    { Fl_Output* o = new Fl_Output(185, 471, 25, 25, "2nd Floor");
-      o->labelsize(12);
-      o->textsize(12);
-      o->value("2");
-    } // Fl_Output* o
-    { Fl_Output* o = new Fl_Output(185, 421, 25, 25, "3rd Floor");
-      o->labelsize(12);
-      o->textsize(12);
-      o->value("0");
-    } // Fl_Output* o
-    { Fl_Output* o = new Fl_Output(185, 372, 25, 25, "4th Floor");
-      o->labelsize(12);
-      o->textsize(12);
-      o->value("1");
-    } // Fl_Output* o
-    { Fl_Output* o = new Fl_Output(185, 322, 25, 25, "5th Floor");
-      o->labelsize(12);
-      o->textsize(12);
-      o->value("0");
-    } // Fl_Output* o
-    { Fl_Output* o = new Fl_Output(185, 272, 25, 25, "6th Floor");
-      o->labelsize(12);
-      o->textsize(12);
-      o->value("0");
-    } // Fl_Output* o
-    { Fl_Output* o = new Fl_Output(185, 217, 25, 25, "7th Floor");
-      o->labelsize(12);
-      o->textsize(12);
-      o->value("1");
-    } // Fl_Output* o
-    { Fl_Output* o = new Fl_Output(185, 167, 25, 25, "8th Floor");
-      o->labelsize(12);
-      o->textsize(12);
-      o->value("0");
-    } // Fl_Output* o
-    { Fl_Output* o = new Fl_Output(185, 120, 25, 25, "9th Floor");
-      o->labelsize(12);
-      o->textsize(12);
-      o->value("0");
-    } // Fl_Output* o
-    { Fl_Output* o = new Fl_Output(185, 70, 25, 25, "10th Floor");
-      o->labelsize(12);
-      o->textsize(12);
-      o->value("3");
-    } // Fl_Output* o
-    { Fl_Round_Button* o = new Fl_Round_Button(215, 520, 60, 25, "Up");
-      o->down_box(FL_ROUND_DOWN_BOX);
-      o->value(1);
-      o->color((Fl_Color)1);
-      o->labelsize(12);
-    } // Fl_Round_Button* o
-    { Fl_Round_Button* o = new Fl_Round_Button(215, 485, 60, 25, "Down");
-      o->down_box(FL_ROUND_DOWN_BOX);
-      o->value(1);
-      o->color((Fl_Color)4);
-      o->labelsize(12);
-    } // Fl_Round_Button* o
-    { Fl_Round_Button* o = new Fl_Round_Button(215, 465, 60, 25, "Up");
-      o->down_box(FL_ROUND_DOWN_BOX);
-      o->value(1);
-      o->color((Fl_Color)1);
-      o->labelsize(12);
-    } // Fl_Round_Button* o
-    { Fl_Round_Button* o = new Fl_Round_Button(215, 434, 60, 25, "Down");
-      o->down_box(FL_ROUND_DOWN_BOX);
-      o->color((Fl_Color)4);
-      o->labelsize(12);
-    } // Fl_Round_Button* o
-    { Fl_Round_Button* o = new Fl_Round_Button(215, 414, 60, 25, "Up");
-      o->down_box(FL_ROUND_DOWN_BOX);
-      o->color((Fl_Color)1);
-      o->labelsize(12);
-    } // Fl_Round_Button* o
-    { Fl_Round_Button* o = new Fl_Round_Button(215, 385, 60, 25, "Down");
-      o->down_box(FL_ROUND_DOWN_BOX);
-      o->value(1);
-      o->color((Fl_Color)4);
-      o->labelsize(12);
-    } // Fl_Round_Button* o
-    { Fl_Round_Button* o = new Fl_Round_Button(215, 365, 60, 25, "Up");
-      o->down_box(FL_ROUND_DOWN_BOX);
-      o->color((Fl_Color)1);
-      o->labelsize(12);
-    } // Fl_Round_Button* o
-    { Fl_Round_Button* o = new Fl_Round_Button(215, 335, 60, 25, "Down");
-      o->down_box(FL_ROUND_DOWN_BOX);
-      o->color((Fl_Color)4);
-      o->labelsize(12);
-    } // Fl_Round_Button* o
-    { Fl_Round_Button* o = new Fl_Round_Button(215, 315, 60, 25, "Up");
-      o->down_box(FL_ROUND_DOWN_BOX);
-      o->color((Fl_Color)1);
-      o->labelsize(12);
-    } // Fl_Round_Button* o
-    { Fl_Round_Button* o = new Fl_Round_Button(215, 280, 60, 25, "Down");
-      o->down_box(FL_ROUND_DOWN_BOX);
-      o->color((Fl_Color)4);
-      o->labelsize(12);
-    } // Fl_Round_Button* o
-    { Fl_Round_Button* o = new Fl_Round_Button(215, 260, 60, 25, "Up");
-      o->down_box(FL_ROUND_DOWN_BOX);
-      o->color((Fl_Color)1);
-      o->labelsize(12);
-    } // Fl_Round_Button* o
-    { Fl_Round_Button* o = new Fl_Round_Button(215, 230, 60, 25, "Down");
-      o->down_box(FL_ROUND_DOWN_BOX);
-      o->color((Fl_Color)4);
-      o->labelsize(12);
-    } // Fl_Round_Button* o
-    { Fl_Round_Button* o = new Fl_Round_Button(215, 210, 60, 25, "Up");
-      o->down_box(FL_ROUND_DOWN_BOX);
-      o->value(1);
-      o->color((Fl_Color)1);
-      o->labelsize(12);
-    } // Fl_Round_Button* o
-    { Fl_Round_Button* o = new Fl_Round_Button(215, 180, 60, 25, "Down");
-      o->down_box(FL_ROUND_DOWN_BOX);
-      o->color((Fl_Color)4);
-      o->labelsize(12);
-    } // Fl_Round_Button* o
-    { Fl_Round_Button* o = new Fl_Round_Button(215, 160, 60, 25, "Up");
-      o->down_box(FL_ROUND_DOWN_BOX);
-      o->color((Fl_Color)1);
-      o->labelsize(12);
-    } // Fl_Round_Button* o
-    { Fl_Round_Button* o = new Fl_Round_Button(215, 131, 60, 25, "Down");
-      o->down_box(FL_ROUND_DOWN_BOX);
-      o->color((Fl_Color)4);
-      o->labelsize(12);
-    } // Fl_Round_Button* o
-    { Fl_Round_Button* o = new Fl_Round_Button(215, 111, 60, 25, "Up");
-      o->down_box(FL_ROUND_DOWN_BOX);
-      o->color((Fl_Color)1);
-      o->labelsize(12);
-    } // Fl_Round_Button* o
-    { Fl_Round_Button* o = new Fl_Round_Button(215, 70, 60, 25, "Down");
-      o->down_box(FL_ROUND_DOWN_BOX);
-      o->value(1);
-      o->color((Fl_Color)4);
-      o->labelsize(12);
-    } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(370, 395, 35, 15, "1");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(370, 375, 35, 15, "2");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(370, 355, 35, 15, "3");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(370, 335, 35, 15, "4");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(370, 317, 35, 15, "5");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(370, 297, 35, 15, "6");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(370, 277, 35, 15, "7");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(370, 257, 35, 15, "8");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(370, 239, 35, 15, "9");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(370, 219, 35, 15, "10");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(505, 395, 35, 15, "1");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(505, 375, 35, 15, "2");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(505, 355, 35, 15, "3");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(505, 335, 35, 15, "4");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(505, 317, 35, 15, "5");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(505, 297, 35, 15, "6");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(505, 277, 35, 15, "7");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(505, 257, 35, 15, "8");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(505, 239, 35, 15, "9");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(505, 219, 35, 15, "10");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(635, 390, 35, 15, "1");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(635, 370, 35, 15, "2");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(635, 350, 35, 15, "3");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(635, 330, 35, 15, "4");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(635, 312, 35, 15, "5");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(635, 292, 35, 15, "6");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(635, 272, 35, 15, "7");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(635, 252, 35, 15, "8");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(635, 234, 35, 15, "9");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(635, 214, 35, 15, "10");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(770, 395, 35, 15, "1");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(770, 375, 35, 15, "2");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(770, 355, 35, 15, "3");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(770, 335, 35, 15, "4");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(770, 317, 35, 15, "5");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(770, 297, 35, 15, "6");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(770, 277, 35, 15, "7");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(770, 257, 35, 15, "8");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(770, 239, 35, 15, "9");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(770, 219, 35, 15, "10");
-          o->down_box(FL_ROUND_DOWN_BOX);
-      } // Fl_Round_Button* o
-      { Fl_Value_Output* o = new Fl_Value_Output(435, 181, 33, 24, "Passengers");
-          o->labelsize(12);
-          o->value(4);
-      } // Fl_Value_Output* o
-      { Fl_Value_Output* o = new Fl_Value_Output(565, 181, 33, 24, "Passengers");
-          o->labelsize(12);
-          o->value(0);
-      } // Fl_Value_Output* o
-      { Fl_Value_Output* o = new Fl_Value_Output(700, 181, 33, 24, "Passengers");
-          o->labelsize(12);
-          o->value(1);
-      } // Fl_Value_Output* o
-      { Fl_Value_Output* o = new Fl_Value_Output(825, 181, 33, 24, "Passengers");
-          o->labelsize(12);
-          o->value(10);
-      } // Fl_Value_Output* o
-      { new Fl_Input(160, 641, 335, 24, "File name");
-      } // Fl_Input* o
-      { new Fl_Button(510, 640, 63, 20, "Load File");
-      } // Fl_Button* o
-    o->end();
-  } // Fl_Window* o
-    w->show();
-  return w;
+//ref class Receiver {
+//public:
+//    void Handler(String^ s) {
+//        Console::WriteLine(s);
+//    }
+//};
+
+Floor :: Floor(int passengers, vector<bool> btns) {
+    numPassengers = passengers;
+    buttons = btns;
+}
+
+int Floor :: getNumPass() {
+    return numPassengers;
+}
+
+vector<bool> Floor :: getButtons() {
+    return buttons;
+}
+
+void Floor :: setNumPass(int passengers) {
+    numPassengers = passengers;
+}
+
+void Floor :: setButtons(vector<bool> btns) {
+    buttons = btns;
+}
+
+Lift :: Lift(int floor, int passengers, int dir, vector<bool> btns) {
+    currentFloor = floor;
+    numPassengers = passengers;
+    direction = dir;
+    buttons = btns;
+}
+
+int Lift :: getCurFLoor() {
+    return currentFloor;
+}
+int Lift :: getNumPass() {
+    return numPassengers;
+}
+
+int Lift :: getDir() {
+    return  direction;
+}
+
+vector<bool> Lift :: getButtons() {
+    return buttons;
+}
+
+void Lift :: setCurFloor(int floor) {
+    currentFloor = floor;
+}
+
+void Lift :: setNumPass(int passengers) {
+    numPassengers = passengers;
+}
+
+void Lift :: setDir(int dir) {
+    direction = dir;
+}
+
+void Lift :: setButtons(vector<bool> btns) {
+    buttons = btns;
 }

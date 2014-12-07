@@ -5,8 +5,8 @@ code_name {.cxx}
 Function {make_window()} {open
 } {
   Fl_Window {} {
-    label Passengers open selected
-    xywh {328 45 931 704} type Single labelsize 12 resizable visible
+    label Passengers open
+    xywh {328 45 931 704} type Single color 55 labelsize 12 resizable visible
   } {
     Fl_Value_Slider {} {
       label Lift1
@@ -14,7 +14,7 @@ Function {make_window()} {open
     }
     Fl_Value_Slider {} {
       label Lift2
-      xywh {470 35 20 525} color 213 align 33 minimum 10 step 1 value 1 slider_size 0.1
+      xywh {470 35 20 525} color 213 align 33 minimum 10 step 1 value 1 slider_size 0.1 deactivate
     }
     Fl_Value_Slider {} {
       label Lift3
@@ -25,8 +25,8 @@ Function {make_window()} {open
       xywh {735 40 20 525} color 213 align 33 minimum 10 step 1 value 2 slider_size 0.1
     }
     Fl_Box {} {
-      label Passengers
-      xywh {100 50 185 510} box EMBOSSED_BOX align 1
+      label Passengers selected
+      xywh {100 50 185 510} box EMBOSSED_BOX color 55 selection_color 0 align 1
     }
     Fl_Output {} {
       label {1st Floor}
@@ -148,7 +148,7 @@ Function {make_window()} {open
     }
     Fl_Round_Button {} {
       label Down
-      xywh {215 70 60 25} down_box ROUND_DOWN_BOX value 1 color 4 labelsize 12
+      xywh {215 70 60 25} down_box ROUND_DOWN_BOX value 1 color 4 labelsize 12 deactivate
     }
     Fl_Round_Button {} {
       label 1

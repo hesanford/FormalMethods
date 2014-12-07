@@ -3,6 +3,7 @@
 #include "Passenger.h"
 
 using namespace std;
+
 /*
 The passengers requirements
 *@param integer floor
@@ -16,8 +17,12 @@ The passengers requirements
 */
 Passenger::Passenger(int identity, int w, int f, string tArr, string tDept) /*Passenger constructor*/
 {
+
+Passenger::Passenger(int identity, int w,int d, int f, string tArr, string tDept) {
+
 	ID = identity;
 	weight = w;
+	direction = d;
 	travelFreq = f;
 	floor = 0;
 	currentLift = 0;
@@ -38,10 +43,16 @@ void Passenger::callLift() {
 	}
 }
 
+
 /*The passenger enters the lift */
  void Passenger::enterLift(int l_id)
  {
 	 currentLift = l_id;
+
+
+ void Passenger::enterLift(int l_id){
+ currentLift = l_id;
+
  }
 
  /*Exit the lift if the passenger is idle*/
@@ -54,14 +65,30 @@ void Passenger::callLift() {
  int Passenger::getWeight()                            /*@param get the weight of the passenger*/
 {
 	return weight;                                     /*@return the value of the weight */
+
+
+int Passenger::getWeight() {
+	return weight;
+
 }
 void Passenger::setWeight(int w)                       /*the weight is set */
 {
 	weight = w;                                       /*@param assign the weight of the passenger*/
 }
+
 int Passenger::getFloor()                             /*@param get the floor the passenger is on*/
 {
 	return floor;                                    /*@return the floor */
+
+int Passenger::getDirection(){
+    return direction;
+}
+void Passenger::setDirection(int d){
+    direction = d;
+}
+int Passenger::getFloor() {
+	return floor;
+
 }
 void Passenger::setFloor(int f)                     /*@param set the floor */
 {

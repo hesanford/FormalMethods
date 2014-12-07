@@ -1,11 +1,11 @@
 #ifndef externalButton_H_
 #define externalButton_H_
-#include "Button.h"
 using namespace std;
 
+
 /*Derived class
-* @param Exteral button is to set the direction
-@param  get to the floor
+* @param Exteral button  to set the direction
+* @param  boolean external button pressed
 */
 class externalButton: public Button/* @param set the exteral button */
 {
@@ -24,6 +24,22 @@ private:
 
 	};
 
+class externalButton
+{
+
+   public:
+   externalButton(int fl,int dir);
+   int getFlr();
+   void setFlr(int);
+   int getDir();
+   void setDir(int);
+   bool isPressed();
+   void setPressed(bool);                   /*@param boolean when set pressed*/
+   private:
+   int floor;
+   int direction;
+   bool pressed;                           /*@param boolean exteral button pressed */
+};
 
 
 #endif /* externalButton_H_ */
