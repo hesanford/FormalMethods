@@ -3,9 +3,10 @@
 #include "Passenger.h"
 
 using namespace std;
-Passenger::Passenger(int identity, int w, int f, string tArr, string tDept) {
+Passenger::Passenger(int identity, int w,int d, int f, string tArr, string tDept) {
 	ID = identity;
 	weight = w;
+	direction = d;
 	travelFreq = f;
 	floor = 0;
 	currentLift = 0;
@@ -37,11 +38,18 @@ void Passenger::callLift() {
 	 idle = true;
  }
 
+
 int Passenger::getWeight() {
 	return weight;
 }
 void Passenger::setWeight(int w) {
 	weight = w;
+}
+int Passenger::getDirection(){
+    return direction;
+}
+void Passenger::setDirection(int d){
+    direction = d;
 }
 int Passenger::getFloor() {
 	return floor;

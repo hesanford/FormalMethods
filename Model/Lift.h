@@ -25,12 +25,23 @@ public:
 	void setDirection(int);
 	vector <int> getNextDests();
 	void updateNextDests(vector<int>);
-	void performStep();
+	void setPriority();
+	int performMove(int);
     bool areDoorsOpen();
     void setDoors(bool);
+    void checkPriority(int,int);
+    void setPriorityList(int,int);
+    vector<int> firstPriorityList;
+    struct secondPriorityItem{
+        int dir;
+        int floorNum;
+    }secondPriorityitem;
+	vector<secondPriorityItem> secondPriorityList;
+	bool isMoving;
+    void mergeTwoList(vector<int>,vector<secondPriorityItem>);
+
 private:
-	vector<int> firstPriorityList;
-	vector<int> secondPriorityList;
+
 	int ID;
 	int wLimit;
 	int curWeight;
@@ -39,8 +50,6 @@ private:
 	int floor;
 	int direction;
 	bool doorsOpen;
-//		int speed;
-//		int failureRate;
 	vector <Passenger> passengers;
 };
 #endif

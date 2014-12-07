@@ -18,21 +18,34 @@ public:
 	void addLift(string);
 	void addPsgr(string);
 	void addButtons();
+	void setCallingDirList ();
 	int getMinFloor();
 	int getMaxFloor();
-	vector <internalButton> getInternalButtons();
-	vector <externalButton> getExternalButtons();
-	vector <int> CallingFloorList();
-	vector<int> CallingFloors;
+	//vector <internalButton> getInternalButtons();
+	//vector <externalButton> getExternalButtons();
+	vector<Lift> lifts;
+	vector<Passenger> passengers;
+	vector <internalButton> inButtons;
+	vector <externalButton> extButtons;
+    //vector<Passenger> RelativePassengers;
+    //vector<Passenger> getRelativePassengers(int);
+    vector<Lift> getLifts();
+    Lift getLift(int);
+
+    typedef struct CallingMessage{
+            int dir;
+            int onFloor;
+    }CallingMessage;
+    vector<CallingMessage> CallingDirList;
+
+
+
+
 private:
 	bool changed;
 	int liftCount;
 	int minFloor;
 	int maxFloor;
-	vector<Lift> lifts;
-	vector<Passenger> passengers;
-	vector<internalButton> intButtons;
-	vector<externalButton> extButtons;
 
 	vector <Passenger> ChangedPassengers();
 	vector <Lift> ChangedLifts();

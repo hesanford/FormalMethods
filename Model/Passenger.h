@@ -6,12 +6,14 @@
 using namespace std;
 class Passenger {
 public:
-	Passenger(int, int, int, string, string);
+	Passenger(int, int, int, int, string, string);
 	void callLift();
 	void enterLift(int);
 	void exitLift();
 	int getWeight();
 	void setWeight(int);
+	int getDirection();
+	void setDirection(int);
 	int getFloor();
 	void setFloor(int);
 	int getDestFloor();
@@ -27,6 +29,7 @@ public:
 private:
 	int ID;
 	int weight;
+	int direction;
 	int travelFreq;
 	int floor;
 	int destinationFloor;

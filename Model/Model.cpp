@@ -12,15 +12,15 @@
 using namespace std;
 
 Model::Model(vector<string> l, vector<string> p) {
-	std::vector<Lift> lifts;
+	std:: vector<Lift> lifts;
 	std:: vector<Passenger> passengers;
-
+    std:: vector<Passenger> RelativePassengers;
 	liftCount = l.size();
 
-	for (int i = 0; i < l.size(); i++) {
+	for (int i = 0; i < (int)l.size(); i++) {
 		addLift(l.at(i));
 	}
-	for (int i = 0; i < p.size(); i++) {
+	for (int i = 0; i < (int)p.size(); i++) {
 		addPsgr(p.at(i));
 	}
 
@@ -32,17 +32,17 @@ Model::Model(vector<string> l, vector<string> p) {
 	setChanged(true);
 }
 
-void Model::update(bool onTick) {
+/*void Model::update(bool onTick) {
 	if (onTick) {
 		for (int i = 0; i < liftCount; i++) {
 			lifts.at(i).performStep();
 		}
-		for (int i = 0; i < passengers.size(); i++) {
+		for (int i = 0; i < (int)passengers.size(); i++) {
 			//implement passengers.at(i).performStep();
 		}
 	}
 	//everything else; update destination lists etc.
-}
+}*/
 
 void Model::addButtons() {
 	for (int i = minFloor; i < maxFloor; i++) {
@@ -56,7 +56,7 @@ void Model::addButtons() {
 		for (int j = f_min; j < f_max; j++) {
 			{
 			internalButton b(lifts.at(i).getID(), j);
-			intButtons.push_back(b);
+			inButtons.push_back(b);
 			}
 		}
 	}
@@ -68,7 +68,7 @@ void Model::addLift(string new_l) {
 	int  identity,weightLimit,minF,maxF,curF,dir;
 	bool dOpen;
 	for (int i=1; i<=7;i++)
-		for(int j=0; j<=new_l.size(); j++)
+		for(int j=0; j <= (int)new_l.size(); j++)
 	if (new_l.at(j)==','){
 		if (i==1){
 			istringstream buffer(elements.at(i));
@@ -110,12 +110,12 @@ void Model::addLift(string new_l) {
 
 void Model::addPsgr(string new_p) {
 	//TODO split string by comma and parse into passenger
-	vector<string> elements(5);
-		int ID,weight,travelFreq;
+	vector<string> elements(6);
+		int ID,weight,direction,travelFreq;
 		std::string currentLift,destinationFloor;
 
-		for (int i=1; i<=5;i++)
-			for(int j=0; j<=new_p.size(); j++)
+		for (int i=1; i<=6;i++)
+			for(int j=0; j <= (int)new_p.size(); j++)
 		if (new_p.at(j)==','){
 			if (i==1){
 				istringstream buffer(elements.at(i));
@@ -125,20 +125,24 @@ void Model::addPsgr(string new_p) {
 				istringstream buffer(elements.at(i));
 				buffer >> weight;
 			}
-			else if(i==3){
+			else if (i==3){
+				istringstream buffer(elements.at(i));
+				buffer >> direction;
+			}
+			else if(i==4){
 				istringstream buffer(elements.at(i));
 				buffer >> travelFreq;
 			}
-			else if(i==4){
+			else if(i==5){
 				currentLift=elements.at(i);
 
 			}
-			else if (i==5){
+			else if (i==6){
 				destinationFloor=elements.at(i);}
 		}
 		else
 			elements.at(i)+=new_p.at(j);
-		Passenger p(ID,weight,travelFreq,currentLift,destinationFloor);
+		Passenger p(ID,weight,direction,travelFreq,currentLift,destinationFloor);
 		passengers.push_back(p);
 
 }
@@ -160,26 +164,36 @@ int Model::getMaxFloor() {
 
 }
 
+
+
+vector<Lift> Model::getLifts(){
+    return lifts;
+}
+
+Lift Model::getLift(int i){
+    return lifts[i];
+}
+
+
 bool Model::isChanged() {
 	return changed;
 }
 void Model::setChanged(bool c) {
 	changed = c;
 }
-vector <internalButton> Model::getInternalButtons(){
-	return intButtons;
-}
-vector <externalButton> Model::getExternalButtons(){
-	return extButtons;
-}
-vector <int> Model:: CallingFloorList(){
-for (int i=0; i<extButtons.size(); i++)
-	if (extButtons.at(i).isPressed())
-		for(int j=0;j<CallingFloors.size();j=j+2)
-			if(CallingFloors.at(j)==extButtons.at(i).getFlr()|| CallingFloors.at(j+1)==extButtons.at(i).getDir())
-			{
-				CallingFloors.push_back(extButtons.at(i).getFlr());
-				CallingFloors.push_back(extButtons.at(i).getDir());
-			}
-return CallingFloors;
+
+void Model::setCallingDirList (){
+
+            for (int i=0; i <(int)extButtons.size(); i++){
+
+                if (extButtons.at(i).isPressed()){
+
+                    CallingMessage callingmessage;
+                    callingmessage.dir = extButtons.at(i).getDir();
+                    callingmessage.onFloor = extButtons.at(i).getFlr();
+                    CallingDirList.push_back(callingmessage);
+
+                }
+            }
+
 }
