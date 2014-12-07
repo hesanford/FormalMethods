@@ -162,6 +162,7 @@ void Controller::run(){
    model.CallingDirList.erase(model.CallingDirList.begin());
    if(pickedLift.isMoving == false){
 
+    ;
 
    }else{
      pickedLift.setDoors(true);
