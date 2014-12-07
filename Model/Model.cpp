@@ -10,11 +10,27 @@
 #include "externalButton.h"
 #include "internalButton.h"
 using namespace std;
-
-Model::Model(vector<string> l, vector<string> p) {
-	std::vector<Lift> lifts;
-	std:: vector<Passenger> passengers;
-
+/*
+Model structure
+*@param integer for the identity of the lift,
+*@param integer for the weight limit
+*@param integer for the minimum floor
+*@param integer for the maximum floor
+*@param integer for the current floor
+*@param integer for the direction
+*@param boolean to open the doors
+*@return integer for minimum floors
+*@return integer for maximum floors
+*@return the change
+*@return external button
+*/
+Model::Model(vector<string> l, vector<string> p) /*Model constructor*/
+{
+	std::vector<Lift> lifts;                      /*new vector lift from namespace*/
+	std::vector<Passenger> passengers;           /*new vector passenger from namespace*/
+	/*
+	To define the capacity of the lift and passengers
+	*/
 	liftCount = l.size();
 
 	for (int i = 0; i < l.size(); i++) {
@@ -23,16 +39,17 @@ Model::Model(vector<string> l, vector<string> p) {
 	for (int i = 0; i < p.size(); i++) {
 		addPsgr(p.at(i));
 	}
-
+	/*Get the maximum and minimum floors */
 	minFloor = getMinFloor();
 	maxFloor = getMaxFloor();
 
-	addButtons();
+	addButtons();//add buttons 
 
-	setChanged(true);
+	setChanged(true);// set change when lift working either set when true
 }
 
-void Model::update(bool onTick) {
+void Model::update(bool onTick)               /*Update the model according to time*/
+{
 	if (onTick) {
 		for (int i = 0; i < liftCount; i++) {
 			lifts.at(i).performStep();
@@ -43,7 +60,7 @@ void Model::update(bool onTick) {
 	}
 	//everything else; update destination lists etc.
 }
-
+/*Add external for the floors  and internal buttons in the lift  */
 void Model::addButtons() {
 	for (int i = minFloor; i < maxFloor; i++) {
 		externalButton a(i,1);
@@ -61,7 +78,15 @@ void Model::addButtons() {
 		}
 	}
 }
-
+/*add the lift to the model 
+*@param integer for the identity of the lift, 
+*@param integer for the weight limit
+*@param integer for the minimum floor
+*@param integer for the maximum floor
+*@param integer for the current floor
+*@param integer for the direction
+*@param boolean to open the doors 
+*/
 void Model::addLift(string new_l) {
 	//TODO split string by comma and parse into lift
 	vector<string> elements(7);
@@ -107,7 +132,11 @@ void Model::addLift(string new_l) {
 	lifts.push_back(l);
 
 }
-
+/*add the passengers tot the model
+*@param integer  the identity of the passenger, 
+*@param integer  theweight
+*@param integer  thetravel frequency
+*/
 void Model::addPsgr(string new_p) {
 	//TODO split string by comma and parse into passenger
 	vector<string> elements(5);
@@ -142,7 +171,8 @@ void Model::addPsgr(string new_p) {
 		passengers.push_back(p);
 
 }
-
+/*get to the 'minimum floor 
+*@return the minimum count of the floor*/
 int Model::getMinFloor() {
 	int re = 0;
 	for (int i = 0; i < liftCount; i++) {
@@ -151,6 +181,8 @@ int Model::getMinFloor() {
 	return re;
 
 }
+/*get to the maximum floor
+* @return the maximum count of the floor*/
 int Model::getMaxFloor() {
 	int re = 0;
 	for (int i = 0; i < liftCount; i++) {
@@ -159,20 +191,28 @@ int Model::getMaxFloor() {
 	return re;
 
 }
-
+/*To change the model
+*@param boolean if changed 
+*@return the change*/
 bool Model::isChanged() {
 	return changed;
 }
 void Model::setChanged(bool c) {
 	changed = c;
 }
-vector <internalButton> Model::getInternalButtons(){
+vector <internalButton> Model::getInternalButtons()
+{
 	return intButtons;
 }
-vector <externalButton> Model::getExternalButtons(){
+vector <externalButton> Model::getExternalButtons()
+{
 	return extButtons;
 }
-std::list <externalButton> Model:: CallingFloorList(){
+/*when external button pressed the model checks the floor list 
+*@param integer the number of external buttons 
+*@return external button is pressed*/
+std::list <externalButton> Model:: CallingFloorList()
+{
 	std::list <externalButton> ExternalButtonsPressed;
 for (int i=0; i<extButtons.size(); i++){
 	if (extButtons.at(i).isPressed())
