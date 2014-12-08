@@ -14,6 +14,8 @@
 #include <stdio.h>
 #include <vector>
 #include <string>
+//#include "Lift.h"
+//#include "Lift.cpp"
 
 using namespace std;
 
@@ -32,6 +34,7 @@ public:
 };
 
 class Lift {
+private:
     int currentFloor;
     int numPassengers;
     int direction;
@@ -56,8 +59,6 @@ private:
     int NUMLIFTS;
     vector<Lift> lifts;
     vector<Floor> floors;
-    
-public:
     vector<Fl_Value_Slider*> sliders;
     vector<Fl_Value_Output*> passengersPerFloor;
     vector<Fl_Round_Button*> upButtons;
@@ -67,7 +68,8 @@ public:
     
 public:
     View(int numfloors, int numlifts, vector<int> liftpass, vector<int> liftstartfloor, vector<int> liftstartdir, vector<int> floorpass, vector<vector<bool> > liftbut, vector<vector<bool> > floorbut);
-    int main();
+    //int main();
+    void update();
     
 private:
     Fl_Window* make_window();
@@ -76,8 +78,6 @@ private:
     static void stopSim(Fl_Widget* obj, void*);
     static void stepFor(Fl_Widget* obj, void*);
     static void stepBack(Fl_Widget* obj, void*);
-    
-    
 };
 
 #endif
