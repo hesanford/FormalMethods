@@ -14,7 +14,6 @@
 #include <stdio.h>
 #include <vector>
 #include <string>
-Fl_Window* make_window();
 
 using namespace std;
 
@@ -51,5 +50,34 @@ public:
     
 };
 
+class View {
+private:
+    int NUMFLOORS;
+    int NUMLIFTS;
+    vector<Lift> lifts;
+    vector<Floor> floors;
+    
+public:
+    vector<Fl_Value_Slider*> sliders;
+    vector<Fl_Value_Output*> passengersPerFloor;
+    vector<Fl_Round_Button*> upButtons;
+    vector<Fl_Round_Button*> downButtons;
+    vector<Fl_Round_Button*> floorButtons;
+    vector<Fl_Value_Output*> passengersPerLift;
+    
+public:
+    View(int numfloors, int numlifts, vector<int> liftpass, vector<int> liftstartfloor, vector<int> liftstartdir, vector<int> floorpass, vector<vector<bool> > liftbut, vector<vector<bool> > floorbut);
+    int main();
+    
+private:
+    Fl_Window* make_window();
+    static void loadFile(Fl_Widget* obj, void*);
+    static void startSim(Fl_Widget* obj, void*);
+    static void stopSim(Fl_Widget* obj, void*);
+    static void stepFor(Fl_Widget* obj, void*);
+    static void stepBack(Fl_Widget* obj, void*);
+    
+    
+};
 
 #endif
